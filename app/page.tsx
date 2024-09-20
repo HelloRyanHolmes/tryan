@@ -11,6 +11,9 @@ import { ethers } from "ethers";
 import polyLogo from "@/assets/polygon-matic-logo.png"
 import { IoIosArrowBack, IoMdArrowBack } from "react-icons/io";
 import { RiLoader5Fill } from "react-icons/ri";
+import { useAccount } from "wagmi";
+//@ts-ignore
+import tryanhead from "@/assets/TRYAN_head.png"
 
 export default function Home() {
   const [amount, setAmount] = useState<number>(1);
@@ -18,16 +21,17 @@ export default function Home() {
 
   const [tryanCost, setTryanCost] = useState<number>(0);
   const [polCost, setPolCost] = useState<number>(0)
-
+  const [holding, setHolding] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(false);
+
+  const{address} = useAccount();
 
   async function fetchDetails(){
     try{
       const contract = await contractSetup();
       setTryanCost(Number(ethers.utils.formatEther(await contract?.tryanCost())));
       setPolCost(Number(ethers.utils.formatEther(await contract?.polCost())));
-
-      
+      setHolding(Number(await contract?.balanceOf(address)));
     }
     catch(err){
       console.log(err);
@@ -62,8 +66,9 @@ export default function Home() {
     }
 }
 
-  async function mint(type:string) {
-    try{
+async function mint(type:string) {
+  try{
+    if(amount > 0){
       const contract = await contractSetup();
       setLoading(true);
 
@@ -82,6 +87,8 @@ export default function Home() {
       }
 
     }
+
+  }
     catch(err){
       console.log(err);
       setLoading(false);
@@ -93,7 +100,7 @@ export default function Home() {
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <Navbar/>
 
-      <div onClick={()=>{setAmountBoxShow(true)}} className="w-screen h-screen bg-green-500 fixed top-0 left-0">
+      <div onClick={()=>{setAmountBoxShow(true)}} className="w-screen h-screen cursor-pointer bg-green-500 fixed top-0 left-0">
       </div>
 
       {amountBoxShow &&
@@ -106,13 +113,13 @@ export default function Home() {
                               <IoIosArrowBack className=""/>
                             </button>
                             <div className="text-[2.5rem] text-center text-black">{amount}</div>
-                            <button onClick={()=>{setAmount((prev)=>(prev+1))}} className="hover:scale-125 rotate-180 text-black text-5xl duration-200">
+                            <button onClick={()=>{if(amount+holding<5)setAmount((prev)=>(prev+1))}} className="hover:scale-125 rotate-180 text-black text-5xl duration-200">
                               <IoIosArrowBack/>
                             </button>
                         </div>
                         {loading ? <RiLoader5Fill className="text-3xl animate-spin text-black h-20" /> :<div className="flex gap-2 w-full">
-                          <button onClick={()=>{mint("matic")}} className='w-1/2 mt-5 group p-2 rounded-xl gap-4 flex items-center justify-center bg-white text-purple-600 duration-200 hover:-translate-y-1 hover:brightness-110'><div className="w-[20%]"><Image src={polyLogo} alt="polyLogo" className="w-6 mx-auto p-1 "/></div><div className="w-[80%] flex flex-col items-center justify-center"><h3 className="text-lg">Mint</h3><h3 className="text-[0.7rem]">{(polCost*amount).toLocaleString()} $POL</h3></div></button>
-                          <button onClick={()=>{mint("tryan")}} className='w-1/2 mt-5 group p-2 rounded-xl gap-4 flex items-center justify-center bg-purple-700 duration-200 hover:-translate-y-1 hover:brightness-110'><div className=" w-[20%]"><Image src={polyLogo} alt="polyLogo" className="w-6 mx-auto bg-white rounded-full p-1 "/></div><div className="w-[80%] flex flex-col items-center justify-center"><h3 className="text-lg">Mint</h3><h3 className="text-[0.7rem]">{(tryanCost*amount).toLocaleString()} $TRYAN</h3></div></button>
+                          <button onClick={()=>{mint("matic")}} className='w-1/2 mt-5 group p-2 rounded-xl gap-4 flex items-center justify-center bg-white text-purple-600 duration-200 hover:-translate-y-1 hover:brightness-110'><div className="w-[25%]"><Image src={polyLogo} alt="polyLogo" className="w-8 mx-auto p-1 "/></div><div className="w-[75%] flex flex-col items-center justify-center"><h3 className="text-lg">Mint</h3><h3 className="text-[0.7rem]">{(polCost*amount).toLocaleString()} $POL</h3></div></button>
+                          <button onClick={()=>{mint("tryan")}} className='w-1/2 text-white mt-5 group p-2 rounded-xl gap-4 flex items-center justify-center bg-purple-700 duration-200 hover:-translate-y-1 hover:brightness-110'><div className=" w-[25%]"><Image src={tryanhead} alt="polyLogo" className="w-8 mx-auto"/></div><div className="w-[75%] flex flex-col items-center justify-center"><h3 className="text-lg">Mint</h3><h3 className="text-[0.7rem]">{(tryanCost*amount).toLocaleString()} $TRYAN</h3></div></button>
                         </div>}
                     </div>
                 </div>}
