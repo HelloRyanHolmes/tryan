@@ -86,7 +86,7 @@ export const WalletConnectButton = () => {
                   <button title='Click to view address' onClick={openAccountModal} type="button" className='bg-yellow-400 border-2 border-black text-black rounded-full px-3 py-1 shadow-xl transform transition duration-300 ease-in-out shadow-black/20 hover:-translate-y-1 hover:bg-yellow-200'>
                     {/* {account.displayName} */}
                     {account.displayBalance
-                      ? ` ${account.displayBalance.slice(0,account.displayBalance.length-5)} $POL | ${tryan.toLocaleString()} $TRYAN`
+                      ? ` ${account.displayBalance.slice(0,account.displayBalance.length-5)} $POL || ${tryan.toLocaleString()} $TRYAN`
                       : ''}
                   </button>
                 </div>

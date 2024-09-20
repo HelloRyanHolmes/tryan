@@ -40,8 +40,7 @@ export const GlobalContextProvider = ({ children }:{children:ReactNode}) => {
             console.log(add);
             //@ts-ignore
             const contract = new ethers.Contract(add, abi, provider);
-            const tokens = Number(ethers.utils.formatEther(await contract.balanceOf(address)));
-            console.log(tokens);
+            const tokens = Math.round(Number(ethers.utils.formatEther(await contract.balanceOf(address))));
 
             setTryan(tokens);
     }
