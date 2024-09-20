@@ -17,12 +17,12 @@ export const metadata: Metadata = {
     siteName: 'TRYAN NFTs',
     images: [
       {
-        url: 'https://cdn.discordapp.com/attachments/1225423312906354788/1286750524779139175/Thumbnail.png?ex=66ef0b4f&is=66edb9cf&hm=d82479e43eccc11876270e296c7178442c2b012d1f2cccbeb942b1c09b8cd92a&', // Must be an absolute URL
+        url: 'https://get.richordietryan.club/og.png', // Must be an absolute URL
         width: 800,
         height: 600,
       },
       {
-        url: 'https://cdn.discordapp.com/attachments/1225423312906354788/1286750524779139175/Thumbnail.png?ex=66ef0b4f&is=66edb9cf&hm=d82479e43eccc11876270e296c7178442c2b012d1f2cccbeb942b1c09b8cd92a&', // Must be an absolute URL
+        url: 'https://get.richordietryan.club/og.png', // Must be an absolute URL
         width: 1800,
         height: 1600,
       },
