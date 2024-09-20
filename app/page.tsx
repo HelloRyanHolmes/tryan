@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { contractAdds } from "@/utils/contractAdds";
 import abi from "@/utils/abis/nftABI"
 import { ethers } from "ethers";
+//@ts-ignore
 import polyLogo from "@/assets/polygon-matic-logo.png"
 import { IoIosArrowBack, IoMdArrowBack } from "react-icons/io";
 import { RiLoader5Fill } from "react-icons/ri";
@@ -26,6 +27,7 @@ export default function Home() {
       setTryanCost(Number(ethers.utils.formatEther(await contract?.tryanCost())));
       setPolCost(Number(ethers.utils.formatEther(await contract?.polCost())));
 
+      
     }
     catch(err){
       console.log(err);
