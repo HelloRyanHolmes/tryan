@@ -118,8 +118,8 @@ async function mint(type:string) {
                             </button>
                         </div>
                         {loading ? <RiLoader5Fill className="text-3xl animate-spin text-black h-20" /> :<div className="flex gap-2 w-full">
-                          <button onClick={()=>{mint("matic")}} className='w-1/2 mt-5 group p-2 rounded-xl gap-4 flex items-center justify-center bg-white text-purple-600 duration-200 hover:-translate-y-1 hover:brightness-110'><div className="w-[25%]"><Image src={polyLogo} alt="polyLogo" className="w-8 mx-auto p-1 "/></div><div className="w-[75%] flex flex-col items-center justify-center"><h3 className="text-lg">Mint</h3><h3 className="text-[0.7rem]">{(polCost*amount).toLocaleString()} $POL</h3></div></button>
                           <button onClick={()=>{mint("tryan")}} className='w-1/2 text-white mt-5 group p-2 rounded-xl gap-4 flex items-center justify-center bg-purple-700 duration-200 hover:-translate-y-1 hover:brightness-110'><div className=" w-[25%]"><Image src={tryanhead} alt="polyLogo" className="w-8 mx-auto"/></div><div className="w-[75%] flex flex-col items-center justify-center"><h3 className="text-lg">Mint</h3><h3 className="text-[0.7rem]">{(tryanCost*amount).toLocaleString()} $TRYAN</h3></div></button>
+                          <button onClick={()=>{mint("matic")}} className='w-1/2 mt-5 group p-2 rounded-xl gap-4 flex items-center justify-center bg-white text-purple-600 duration-200 hover:-translate-y-1 hover:brightness-110'><div className="w-[25%]"><Image src={polyLogo} alt="polyLogo" className="w-8 mx-auto p-1 "/></div><div className="w-[75%] flex flex-col items-center justify-center"><h3 className="text-lg">Mint</h3><h3 className="text-[0.7rem]">{(polCost*amount).toLocaleString()} $POL</h3></div></button>
                         </div>}
                     </div>
                 </div>}
