@@ -97,13 +97,11 @@ async function mint(type:string) {
 }
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="grid grid-rows-[20px_1fr_20px] bg-purple-500 items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <Navbar/>
 
-      <div onClick={()=>{setAmountBoxShow(true)}} className="w-screen h-screen cursor-pointer bg-green-500 fixed top-0 left-0">
-      </div>
+      
 
-      {amountBoxShow &&
                 <div className="bg-yellow-400 z-10 border-2 pointer-events-auto border-black rounded-2xl w-80 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-black">
                     <div className="relative flex flex-col items-center justify-center w-full h-full p-2 pt-10">
                         <h2 onClick={() => { setAmountBoxShow(false) }} className="absolute top-0 right-0 cursor-pointer m-2 mx-4 text-black hover:text-red-600 transform hover:scale-125 transition-all duration-200 ease-in-out">x</h2>
@@ -122,7 +120,7 @@ async function mint(type:string) {
                           <button onClick={()=>{mint("matic")}} className='w-1/2 mt-5 group p-2 rounded-xl gap-4 flex items-center justify-center bg-white text-purple-600 duration-200 hover:-translate-y-1 hover:brightness-110'><div className="w-[25%]"><Image src={polyLogo} alt="polyLogo" className="w-8 mx-auto p-1 "/></div><div className="w-[75%] flex flex-col items-center justify-center"><h3 className="text-lg">Mint</h3><h3 className="text-[0.7rem]">{(polCost*amount).toLocaleString()} $POL</h3></div></button>
                         </div>}
                     </div>
-                </div>}
+                </div>
 
 
     </div>
