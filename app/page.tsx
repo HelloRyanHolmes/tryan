@@ -27,6 +27,56 @@ export default function Home() {
 
   const{address} = useAccount();
 
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+
+  useEffect(() => {
+    const targetDate = new Date('2024-11-15T10:00:00-05:00'); // EST is UTC-5
+
+    const calculateTimeLeft = () => {
+      const now = new Date();
+      // @ts-ignore
+      const difference = targetDate - now;
+
+      if (difference <= 0) {
+        return {
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0
+        };
+      }
+
+      return {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((difference % (1000 * 60)) / 1000)
+      };
+    };
+
+    // Update immediately
+    setTimeLeft(calculateTimeLeft());
+
+    // Update every second
+    const timer = setInterval(() => {
+      const timeLeft = calculateTimeLeft();
+      setTimeLeft(timeLeft);
+
+      // Clear interval when target date is reached
+      if (Object.values(timeLeft).every(value => value === 0)) {
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    // Cleanup on unmount
+    return () => clearInterval(timer);
+  }, []);
+
   async function fetchDetails(){
     try{
       const contract = await contractSetup();
@@ -101,10 +151,29 @@ async function mint(type:string) {
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <Navbar/>
       <Background/>
+      <div className="fixed z-50 top-0 bg-[#fcdc0f] shadow-xl shadow-black/20 rounded-b-xl border-x-4 border-b-4 px-6 pb-6 pt-2 border-black">
+          <h2 className="text-center text-black">Mint starts in:</h2>
+        <div className="grid grid-cols-4 gap-4 text-center text-black">
+            <div className="flex flex-col">
+              <span className="text-4xl font-bold">{timeLeft.days}</span>
+              <span className="text-sm">Days</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-4xl font-bold">{timeLeft.hours}</span>
+              <span className="text-sm">Hours</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-4xl font-bold">{timeLeft.minutes}</span>
+              <span className="text-sm">Minutes</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-4xl font-bold">{timeLeft.seconds}</span>
+              <span className="text-sm">Seconds</span>
+            </div>
+          </div>
+      </div>
                 <div className="bg-yellow-400 z-10 border-2 pointer-events-auto border-black rounded-2xl w-80 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-black">
-                    <div className="relative flex flex-col items-center justify-center w-full h-full p-2 pt-10">
-                        <h2 onClick={() => { setAmountBoxShow(false) }} className="absolute top-0 right-0 cursor-pointer m-2 mx-4 text-black hover:text-red-600 transform hover:scale-125 transition-all duration-200 ease-in-out">x</h2>
-                        
+                    <div className="relative flex flex-col items-center justify-center w-full h-full p-2 pt-10">                        
                         <div className="grid grid-flow-col grid-cols-3 items-center gap-5">
                             <button onClick={()=>{if(amount > 0){setAmount((prev)=>(prev-1))}}} className="hover:scale-125 text-black text-5xl duration-200">
                               <IoIosArrowBack className=""/>
