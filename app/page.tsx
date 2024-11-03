@@ -14,6 +14,7 @@ import { RiLoader5Fill } from "react-icons/ri";
 import { useAccount } from "wagmi";
 //@ts-ignore
 import tryanhead from "@/assets/TRYAN_head.png"
+import { Background } from "@/components/Background";
 
 export default function Home() {
   const [amount, setAmount] = useState<number>(1);
@@ -99,7 +100,7 @@ async function mint(type:string) {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <Navbar/>
-
+      <Background/>
                 <div className="bg-yellow-400 z-10 border-2 pointer-events-auto border-black rounded-2xl w-80 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-black">
                     <div className="relative flex flex-col items-center justify-center w-full h-full p-2 pt-10">
                         <h2 onClick={() => { setAmountBoxShow(false) }} className="absolute top-0 right-0 cursor-pointer m-2 mx-4 text-black hover:text-red-600 transform hover:scale-125 transition-all duration-200 ease-in-out">x</h2>
