@@ -41,7 +41,7 @@ export default function Home() {
 
   useEffect(()=>{
     fetchDetails()
-  },[])
+  },[address])
 
   async function contractSetup() {
     try {
