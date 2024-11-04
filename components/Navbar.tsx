@@ -14,7 +14,7 @@ export const Navbar = () => {
         <div className='md:w-[60%] flex items-center gap-2'>
             <a href='https://t.me/RichOrDieTRYAN' target='_blank' className='group w-20'><Image src={telegramUp} alt='teleUp' className='group-hover:hidden' /><Image src={telegramDown} alt='teleDown' className='hidden group-hover:flex' /></a>
             <a href='https://www.richordietryan.club/' target='_blank' className='group w-20'><Image src={websiteUp} alt='webUp' className='group-hover:hidden' /><Image src={websiteDown} alt='webDown' className='hidden group-hover:flex' /></a>
-            <a href='https://build.richordietryan.club/' target='_blank' className='group w-20'><Image src={buildUp} alt='webUp' className='group-hover:hidden' /><Image src={buildDown} alt='webDown' className='hidden group-hover:flex' /></a>
+            <a className='group grayscale w-20'><Image src={buildUp} alt='webUp' className='group-hover:hidden' /><Image src={buildDown} alt='webDown' className='hidden group-hover:flex' /></a>
         </div>
         <div className='md:w-[40%] flex justify-end items-center'>
             <WalletConnectButton/>
