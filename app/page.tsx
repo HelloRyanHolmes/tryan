@@ -150,7 +150,7 @@ async function approval() {
 
     const shit = await contract?.allowance(address, contractAdds.tryanCollection);
 
-    if(shit<tryanCost*amount){
+    if(Number(ethers.utils.formatEther(String(shit)))<tryanCost*amount){
       const approve = await contract?.approve(contractAdds.tryanCollection, ethers.utils.parseEther(String(tryanCost*amount)));
       approve.wait().then((res:any) => {
         mint("tryan");
