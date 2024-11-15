@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { contractAdds } from "@/utils/contractAdds";
 import abi from "@/utils/abis/nftABI"
 import { ethers } from "ethers";
+import erc20abi from "@/utils/abis/tokenABI"
 //@ts-ignore
 import polyLogo from "@/assets/polygon-matic-logo.png"
 import { IoIosArrowBack, IoMdArrowBack } from "react-icons/io";
@@ -117,6 +118,60 @@ export default function Home() {
     }
 }
 
+async function setERC20() {
+
+  // @ts-ignore
+  if (typeof window.ethereum !== 'undefined') {
+
+    //@ts-ignore
+    await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+    //@ts-ignore
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+
+  try {
+    const contract = new ethers.Contract(contractAdds.tryanToken, erc20abi, signer);
+    return contract;
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+}
+
+
+
+async function approval() {
+
+  try {
+    setLoading(true);
+    const contract = await setERC20();
+
+    const shit = await contract?.allowance(address, contractAdds.tryanCollection);
+
+    if(shit<tryanCost*amount){
+      const approve = await contract?.approve(contractAdds.tryanCollection, ethers.utils.parseEther(String(tryanCost*amount)));
+      approve.wait().then((res:any) => {
+        mint("tryan");
+      });
+
+    }
+
+    else{
+      mint("tryan");
+    }
+
+
+
+  }
+  catch (err) {
+    console.log(err);
+    setLoading(false);
+  }
+
+}
+
 async function mint(type:string) {
   try{
     if(amount > 0){
@@ -137,6 +192,8 @@ async function mint(type:string) {
         })
       }
 
+      window.location.reload()
+
     }
 
   }
@@ -145,6 +202,7 @@ async function mint(type:string) {
       setLoading(false);
 
     }
+    
 }
 
   return (
@@ -179,12 +237,12 @@ async function mint(type:string) {
                               <IoIosArrowBack className=""/>
                             </button>
                             <div className="text-[2.5rem] text-center text-black">{amount}</div>
-                            <button onClick={()=>{if(amount+holding<=5)setAmount((prev)=>(prev+1))}} className="hover:scale-125 rotate-180 text-black text-5xl duration-200">
+                            <button onClick={()=>{if(amount+holding<5)setAmount((prev)=>(prev+1))}} className="hover:scale-125 rotate-180 text-black text-5xl duration-200">
                               <IoIosArrowBack/>
                             </button>
                         </div>
                         {loading ? <RiLoader5Fill className="text-3xl animate-spin text-black h-20" /> :<div className="flex gap-2 w-full">
-                          <button onClick={()=>{mint("tryan")}} className='w-1/2 text-white mt-5 group p-2 rounded-xl gap-4 flex items-center justify-center bg-purple-700 duration-200 hover:-translate-y-1 hover:brightness-110'><div className=" w-[25%]"><Image src={tryanhead} alt="polyLogo" className="w-8 mx-auto"/></div><div className="w-[75%] flex flex-col items-center justify-center"><h3 className="text-lg">Mint</h3><h3 className="text-[0.7rem]">{(tryanCost*amount).toLocaleString()} $TRYAN</h3></div></button>
+                          <button onClick={()=>{approval()}} className='w-1/2 text-white mt-5 group p-2 rounded-xl gap-4 flex items-center justify-center bg-purple-700 duration-200 hover:-translate-y-1 hover:brightness-110'><div className=" w-[25%]"><Image src={tryanhead} alt="polyLogo" className="w-8 mx-auto"/></div><div className="w-[75%] flex flex-col items-center justify-center"><h3 className="text-lg">Mint</h3><h3 className="text-[0.7rem]">{(tryanCost*amount).toLocaleString()} $TRYAN</h3></div></button>
                           <button onClick={()=>{mint("matic")}} className='w-1/2 mt-5 group p-2 rounded-xl gap-4 flex items-center justify-center bg-white text-purple-600 duration-200 hover:-translate-y-1 hover:brightness-110'><div className="w-[25%]"><Image src={polyLogo} alt="polyLogo" className="w-8 mx-auto p-1 "/></div><div className="w-[75%] flex flex-col items-center justify-center"><h3 className="text-lg">Mint</h3><h3 className="text-[0.7rem]">{(polCost*amount).toLocaleString()} $POL</h3></div></button>
                         </div>}
                     </div>
