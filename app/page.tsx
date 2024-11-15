@@ -25,6 +25,7 @@ export default function Home() {
   const [polCost, setPolCost] = useState<number>(0)
   const [holding, setHolding] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(false);
+  const[totalSupply, setTotalSupply] = useState<number>(0);
 
   const{address} = useAccount();
 
@@ -84,6 +85,7 @@ export default function Home() {
       setTryanCost(Number(ethers.utils.formatEther(await contract?.tryanCost())));
       setPolCost(Number(ethers.utils.formatEther(await contract?.polCost())));
       setHolding(Number(await contract?.balanceOf(address)));
+      setTotalSupply(Number(await contract?.totalSupply()));
     }
     catch(err){
       console.log(err);
@@ -209,6 +211,12 @@ async function mint(type:string) {
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <Navbar/>
       <Background/>
+
+      <div className="text-[#fcdc0f] border-4 border-black rounded-full w-60 flex items-center justify-center flex-col py-2 absolute top-40 shadow-xl shadow-black/30 bg-black">
+        <h2 className="text-xl font-bold">Minted</h2>
+        <h3 className="text-lg">{totalSupply}/1069</h3>
+      </div>
+
       <div className="fixed z-50 bottom-0 bg-[#fcdc0f] shadow-xl shadow-black/20 rounded-t-xl border-x-4 border-t-4 px-6 pb-6 pt-2 border-black">
           <h2 className="text-center text-black">Reveals in:</h2>
         <div className="grid grid-cols-4 gap-4 text-center text-black">
