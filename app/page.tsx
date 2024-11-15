@@ -179,7 +179,7 @@ async function mint(type:string) {
                               <IoIosArrowBack className=""/>
                             </button>
                             <div className="text-[2.5rem] text-center text-black">{amount}</div>
-                            <button onClick={()=>{if(amount+holding<5)setAmount((prev)=>(prev+1))}} className="hover:scale-125 rotate-180 text-black text-5xl duration-200">
+                            <button onClick={()=>{if(amount+holding<=5)setAmount((prev)=>(prev+1))}} className="hover:scale-125 rotate-180 text-black text-5xl duration-200">
                               <IoIosArrowBack/>
                             </button>
                         </div>
