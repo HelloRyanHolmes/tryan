@@ -36,7 +36,7 @@ export default function Home() {
   });
 
   useEffect(() => {
-    const targetDate = new Date('2024-11-15T10:00:00-05:00'); // EST is UTC-5
+    const targetDate = new Date('2024-11-22T10:12:00-05:00'); // EST is UTC-5
 
     const calculateTimeLeft = () => {
       const now = new Date();
@@ -210,7 +210,7 @@ async function mint(type:string) {
       <Navbar/>
       <Background/>
       <div className="fixed z-50 bottom-0 bg-[#fcdc0f] shadow-xl shadow-black/20 rounded-t-xl border-x-4 border-t-4 px-6 pb-6 pt-2 border-black">
-          <h2 className="text-center text-black">Mint starts in:</h2>
+          <h2 className="text-center text-black">Reveals in:</h2>
         <div className="grid grid-cols-4 gap-4 text-center text-black">
             <div className="flex flex-col">
               <span className="text-4xl font-bold">{timeLeft.days}</span>
