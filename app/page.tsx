@@ -19,7 +19,6 @@ import { Background } from "@/components/Background";
 
 export default function Home() {
   const [amount, setAmount] = useState<number>(1);
-  const [amountBoxShow, setAmountBoxShow] = useState<boolean>(false);
 
   const [tryanCost, setTryanCost] = useState<number>(0);
   const [polCost, setPolCost] = useState<number>(0)
@@ -93,6 +92,7 @@ export default function Home() {
   }
 
   useEffect(()=>{
+    if(address)
     fetchDetails()
   },[address])
 
@@ -102,7 +102,7 @@ export default function Home() {
         if (typeof window.ethereum !== 'undefined') {
 
             //@ts-ignore
-            await window.ethereum.request({ method: 'eth_requestAccounts' });
+            // await window.ethereum.request({ method: 'eth_requestAccounts' });
             const add = contractAdds.tryanCollection;
 
             //@ts-ignore
@@ -175,6 +175,9 @@ async function approval() {
 }
 
 async function mint(type:string) {
+  if(String(address) == ""){
+    return ;
+  }
   try{
     if(amount > 0){
       const contract = await contractSetup();
@@ -245,7 +248,7 @@ async function mint(type:string) {
                               <IoIosArrowBack className=""/>
                             </button>
                             <div className="text-[2.5rem] text-center text-black">{amount}</div>
-                            <button onClick={()=>{if(amount+holding<5)setAmount((prev)=>(prev+1))}} className="hover:scale-125 rotate-180 text-black text-5xl duration-200">
+                            <button onClick={()=>{if(amount+holding<10)setAmount((prev)=>(prev+1))}} className="hover:scale-125 rotate-180 text-black text-5xl duration-200">
                               <IoIosArrowBack/>
                             </button>
                         </div>
